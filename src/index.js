@@ -280,7 +280,6 @@ function getSideVector() {
 function controls( deltaTime ) {
 
   const speed = 25;
-  console.log(keyStates)
 
   if ( playerOnFloor ) {
 
