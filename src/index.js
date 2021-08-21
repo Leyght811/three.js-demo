@@ -130,7 +130,7 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize( canvas.clientWidth, canvas.clientHeight, false );
 
 }
 
@@ -280,28 +280,29 @@ function getSideVector() {
 function controls( deltaTime ) {
 
   const speed = 25;
+  console.log(keyStates)
 
   if ( playerOnFloor ) {
 
-    if ( keyStates[ 'KeyW' ] ) {
+    if ( keyStates[ 'KeyW' ] || keyStates[ 'ArrowUp' ] ) {
 
       playerVelocity.add( getForwardVector().multiplyScalar( speed * deltaTime ) );
 
     }
 
-    if ( keyStates[ 'KeyS' ] ) {
+    if ( keyStates[ 'KeyS' ] || keyStates[ 'ArrowDown' ]  ) {
 
       playerVelocity.add( getForwardVector().multiplyScalar( - speed * deltaTime ) );
 
     }
 
-    if ( keyStates[ 'KeyA' ] ) {
+    if ( keyStates[ 'KeyA' ] || keyStates[ 'ArrowLeft' ]  ) {
 
       playerVelocity.add( getSideVector().multiplyScalar( - speed * deltaTime ) );
 
     }
 
-    if ( keyStates[ 'KeyD' ] ) {
+    if ( keyStates[ 'KeyD' ] || keyStates[ 'ArrowRight' ]  ) {
 
       playerVelocity.add( getSideVector().multiplyScalar( speed * deltaTime ) );
 
