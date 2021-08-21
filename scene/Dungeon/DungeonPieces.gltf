@@ -1,0 +1,227 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.6.16",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.19433586299419403,
+                0.7900887727737427,
+                -0.48948734998703003,
+                0.31368041038513184
+            ],
+            "translation" : [
+                9.589862823486328,
+                4.958309173583984,
+                -7.498558044433594
+            ]
+        },
+        {
+            "mesh" : 0,
+            "name" : "Dungeon"
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Colour Grid",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0
+            }
+        },
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 1
+            },
+            "name" : "Colour Grid Emission",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Plane.007",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "Modular+Dungeon+Colour+Grid",
+            "uri" : "ModularDungeonColourGrid.png"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 79226,
+            "max" : [
+                14.47683334350586,
+                3,
+                2.376832962036133
+            ],
+            "min" : [
+                -22.47683334350586,
+                -0.03611753135919571,
+                -34.57683181762695
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 79226,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 79226,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5125,
+            "count" : 128484,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 4416,
+            "max" : [
+                13.775874137878418,
+                2.084120512008667,
+                1.6469204425811768
+            ],
+            "min" : [
+                -21.803340911865234,
+                1.811865210533142,
+                -32.071022033691406
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 4416,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 4416,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 6486,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 950712,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 950712,
+            "byteOffset" : 950712
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 633808,
+            "byteOffset" : 1901424
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 513936,
+            "byteOffset" : 2535232
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 52992,
+            "byteOffset" : 3049168
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 52992,
+            "byteOffset" : 3102160
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 35328,
+            "byteOffset" : 3155152
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 12972,
+            "byteOffset" : 3190480
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 3203452,
+            "uri" : "DungeonPieces.bin"
+        }
+    ]
+}
