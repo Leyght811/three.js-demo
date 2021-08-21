@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
+import { Octree } from 'three/examples/jsm/math/Octree.js';
+import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 
 // Import our glTF model.
 import gltfUrl from "../scene/Dungeon/DungeonPieces.gltf";
@@ -8,248 +10,362 @@ import gltfUrl from "../scene/Dungeon/DungeonPieces.gltf";
 // Import our GUI
 import * as dat from 'dat.gui'
 
-//debug
-const gui = new dat.GUI()
-
-// Create the renderer and scene, which will consist of one light and the main camera.
-const canvas = document.getElementById("canvas");
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-const scene = new THREE.Scene();
-
-//Creates the velocity and movement that the camera will follow
-const velocity = new THREE.Vector3();
-const direction = new THREE.Vector3();
-let prevTime = performance.now();
-const vertex = new THREE.Vector3();
-const color = new THREE.Color();
-
-const objects = []
-
-// Creates camera, this will be added to PointerLockControls so that it follows the mouse pointer rather than being added directly to the scene
-const camera = new THREE.PerspectiveCamera(
-  45,
-  canvas.clientWidth / canvas.clientHeight,
-  1,
-  1000
-);
-camera.position.set(83, 15, -300);
-camera.rotateY(3.3)
-// console.log(camera.rotation)
-
-//PointerLockControls causes camera to follow mouse pointer
-const controls = new PointerLockControls(camera, document.body);
-scene.add(controls.getObject());
-
-// gui.add(controls.getObject().rotation, 'y').min(0).max(3.3)
-
-
-document.addEventListener("click", function () {
-  controls.lock();
-});
-
-//Adds lighting to scene
-const light = new THREE.AmbientLight();
-scene.add(light);
-
-// Load the glTF model and add it to the scene.
-var model;
-const loader = new GLTFLoader();
-loader.load(gltfUrl, (gltf) => {
-  model = gltf.scene.children[1];
-  model.scale.set(10,10,10)
-  // model.position.y -= model.clientHeight
-  scene.add(model);
-});
-
-// gui.add(controls.getObject().position, 'x')
-// gui.add(controls.getObject().position, 'y')
-// gui.add(controls.getObject().position, 'z')
-
-// Instruct the engine to resize when the window does.
-window.addEventListener("resize", () => {
-  camera.aspect = canvas.clientWidth / canvas.clientHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-});
-
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-let moveUp = false;
-let moveDown = false;
-
-document.addEventListener("keypress", onDocumentKeyDown);
-document.addEventListener("keyup", onDocumentKeyUp);
-
-function onDocumentKeyDown(event) {
-  switch (event.code) {
-    case "ArrowUp":
-    case "KeyW":
-      moveForward = true;
-      break;
-
-    case "ArrowLeft":
-    case "KeyA":
-      moveLeft = true;
-      break;
-
-    case "ArrowDown":
-    case "KeyS":
-      moveBackward = true;
-      break;
-
-    case "ArrowRight":
-    case "KeyD":
-      moveRight = true;
-      break;
-
-    case "Space":
-    case "KeyQ":
-      moveUp = true;
-      break;
-
-    case "Shift":
-    case "KeyE":
-      moveDown = true;
-      break;
-  }
-}
-
-function onDocumentKeyUp(event) {
-  switch (event.code) {
-    case "ArrowUp":
-    case "KeyW":
-      moveForward = false;
-      break;
-
-    case "ArrowLeft":
-    case "KeyA":
-      moveLeft = false;
-      break;
-
-    case "ArrowDown":
-    case "KeyS":
-      moveBackward = false;
-      break;
-
-    case "ArrowRight":
-    case "KeyD":
-      moveRight = false;
-      break;
-
-    case "Space":
-    case "KeyQ":
-      moveUp = false;
-      break;
-
-    case "Shift":
-    case "KeyE":
-      moveDown = false;
-      break;
-  }
-}
-
-//Floor
-
-let raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
-
-// // floor
-
-// let floorGeometry = new PlaneGeometry(2000, 2000, 100, 100);
-// floorGeometry.rotateX(-Math.PI / 2);
-
-// // vertex displacement
-
-// let position = floorGeometry.attributes.position;
-
-// for (let i = 0, l = position.count; i < l; i++) {
-//   vertex.fromBufferAttribute(position, i);
-
-//   vertex.x += Math.random() * 20 - 10;
-//   vertex.y += Math.random() * 2;
-//   vertex.z += Math.random() * 20 - 10;
-
-//   position.setXYZ(i, vertex.x, vertex.y, vertex.z);
-// }
-
-// floorGeometry = floorGeometry.toNonIndexed(); // ensure each face has unique vertices
-
-// position = floorGeometry.attributes.position;
-// const colorsFloor = [];
-
-// for (let i = 0, l = position.count; i < l; i++) {
-//   color.setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-//   colorsFloor.push(color.r, color.g, color.b);
-// }
-
-// floorGeometry.setAttribute("color", new Float32BufferAttribute(colorsFloor, 3));
-
-// const floorMaterial = new MeshBasicMaterial({ vertexColors: true });
-
-// const floor = new Mesh(floorGeometry, floorMaterial);
-// scene.add(floor);
-
 
 const clock = new THREE.Clock();
 
-// Start the engine's main render loop.
-const animate = () => {
-  requestAnimationFrame(animate);
-  // console.log(controls.getObject().position.y)
-  const time = performance.now();
+const scene = new THREE.Scene();
+scene.background = new THREE.Color( 0x88ccff );
 
-  if (controls.isLocked === true) {
-    raycaster.ray.origin.copy(controls.getObject().position);
-    raycaster.ray.origin.y -= 10;
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.rotation.order = 'YXZ';
 
-    const intersections = raycaster.intersectObjects(objects);
+const ambientlight = new THREE.AmbientLight( 0x6688cc );
+scene.add( ambientlight );
 
-    const onObject = intersections.length > 0;
-    const delta = (time - prevTime) / 1000;
+const fillLight1 = new THREE.DirectionalLight( 0xff9999, 0.5 );
+fillLight1.position.set( - 1, 1, 2 );
+scene.add( fillLight1 );
 
-    velocity.x -= velocity.x * 10.0 * delta;
-    velocity.y -= velocity.y * 10.0 * delta;
-    velocity.z -= velocity.z * 10.0 * delta;
+const fillLight2 = new THREE.DirectionalLight( 0x8888ff, 0.2 );
+fillLight2.position.set( 0, - 1, 0 );
+scene.add( fillLight2 );
 
-    // velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+const directionalLight = new THREE.DirectionalLight( 0xffffaa, 1.2 );
+directionalLight.position.set( - 5, 25, - 1 );
+directionalLight.castShadow = true;
+directionalLight.shadow.camera.near = 0.01;
+directionalLight.shadow.camera.far = 500;
+directionalLight.shadow.camera.right = 30;
+directionalLight.shadow.camera.left = - 30;
+directionalLight.shadow.camera.top	= 30;
+directionalLight.shadow.camera.bottom = - 30;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
+directionalLight.shadow.radius = 4;
+directionalLight.shadow.bias = - 0.00006;
+scene.add( directionalLight );
 
-    direction.z = Number(moveForward) - Number(moveBackward);
-    direction.x = Number(moveRight) - Number(moveLeft);
-    // direction.y = Number(moveUp) - Number(moveDown);
-    direction.normalize(); // this ensures consistent movements in all directions
+const canvas = document.getElementById("canvas");
+const renderer = new THREE.WebGLRenderer( {canvas, antialias: true } );
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize( canvas.clientWidth, canvas.clientHeight, false );
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.VSMShadowMap;
 
-    if (moveForward || moveBackward) velocity.z -= direction.z * 800.0 * delta;
-    if (moveLeft || moveRight) velocity.x -= direction.x * 800.0 * delta;
-    if (moveUp) controls.getObject().position.y += 2
-    if (moveDown) controls.getObject().position.y -= 2
+// const container = document.getElementById( 'container' );
 
-    // if (moveUp || moveDown) velocity.y -= direction.y * 400.0 * delta;
+// container.appendChild( renderer.domElement );
 
-    // if ( onObject === true ) {
 
-    //   velocity.y = Math.max( 0, velocity.y );
 
-    // }
-    controls.moveRight(-velocity.x * delta);
-    controls.moveForward(-velocity.z * delta);
-    // controls.getObject().position.y += (-velocity.y * delta);
+const GRAVITY = 30;
 
-    controls.getObject().position.y += velocity.y * delta; // new behavior
+const NUM_SPHERES = 20;
+const SPHERE_RADIUS = 0.2;
 
-    if (controls.getObject().position.y < 10) {
-      velocity.y = 0;
-      controls.getObject().position.y = 10;
-    }
-    if (controls.getObject().position.y > 30) {
-      velocity.y = 0;
-      controls.getObject().position.y = 30
-    }
+const STEPS_PER_FRAME = 5;
+
+const sphereGeometry = new THREE.SphereGeometry( SPHERE_RADIUS, 32, 32 );
+const sphereMaterial = new THREE.MeshStandardMaterial( { color: 0x888855, roughness: 0.8, metalness: 0.5 } );
+
+const spheres = [];
+let sphereIdx = 0;
+
+for ( let i = 0; i < NUM_SPHERES; i ++ ) {
+
+  const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+  sphere.castShadow = true;
+  sphere.receiveShadow = true;
+
+  scene.add( sphere );
+
+  spheres.push( { mesh: sphere, collider: new THREE.Sphere( new THREE.Vector3( 0, - 100, 0 ), SPHERE_RADIUS ), velocity: new THREE.Vector3() } );
+
+}
+
+const worldOctree = new Octree();
+
+const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 1, 0 ), 0.35 );
+
+const playerVelocity = new THREE.Vector3();
+const playerDirection = new THREE.Vector3();
+
+let playerOnFloor = false;
+
+const keyStates = {};
+
+document.addEventListener( 'keydown', ( event ) => {
+
+  keyStates[ event.code ] = true;
+
+} );
+
+document.addEventListener( 'keyup', ( event ) => {
+
+  keyStates[ event.code ] = false;
+
+} );
+
+document.addEventListener( 'mousedown', () => {
+
+  document.body.requestPointerLock();
+
+} );
+
+document.body.addEventListener( 'mousemove', ( event ) => {
+
+  if ( document.pointerLockElement === document.body ) {
+
+    camera.rotation.y -= event.movementX / 500;
+    camera.rotation.x -= event.movementY / 500;
+
   }
-  prevTime = time;
-  renderer.render(scene, camera);
-};
 
-animate();
+} );
+
+window.addEventListener( 'resize', onWindowResize );
+
+function onWindowResize() {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+document.addEventListener( 'click', () => {
+
+  const sphere = spheres[ sphereIdx ];
+
+  camera.getWorldDirection( playerDirection );
+
+  sphere.collider.center.copy( playerCollider.end );
+  sphere.velocity.copy( playerDirection ).multiplyScalar( 30 );
+
+  sphereIdx = ( sphereIdx + 1 ) % spheres.length;
+
+} );
+
+function playerCollitions() {
+
+  const result = worldOctree.capsuleIntersect( playerCollider );
+
+  playerOnFloor = false;
+
+  if ( result ) {
+
+    playerOnFloor = result.normal.y > 0;
+
+    if ( ! playerOnFloor ) {
+
+      playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) );
+
+    }
+
+    playerCollider.translate( result.normal.multiplyScalar( result.depth ) );
+
+  }
+
+}
+
+function updatePlayer( deltaTime ) {
+
+  if ( playerOnFloor ) {
+
+    const damping = Math.exp( - 3 * deltaTime ) - 1;
+    playerVelocity.addScaledVector( playerVelocity, damping );
+
+  } else {
+
+    playerVelocity.y -= GRAVITY * deltaTime;
+
+  }
+
+  const deltaPosition = playerVelocity.clone().multiplyScalar( deltaTime );
+  playerCollider.translate( deltaPosition );
+
+  playerCollitions();
+
+  camera.position.copy( playerCollider.end );
+
+}
+
+function spheresCollisions() {
+
+  for ( let i = 0; i < spheres.length; i ++ ) {
+
+    const s1 = spheres[ i ];
+
+    for ( let j = i + 1; j < spheres.length; j ++ ) {
+
+      const s2 = spheres[ j ];
+
+      const d2 = s1.collider.center.distanceToSquared( s2.collider.center );
+      const r = s1.collider.radius + s2.collider.radius;
+      const r2 = r * r;
+
+      if ( d2 < r2 ) {
+
+        const normal = s1.collider.clone().center.sub( s2.collider.center ).normalize();
+        const v1 = normal.clone().multiplyScalar( normal.dot( s1.velocity ) );
+        const v2 = normal.clone().multiplyScalar( normal.dot( s2.velocity ) );
+        s1.velocity.add( v2 ).sub( v1 );
+        s2.velocity.add( v1 ).sub( v2 );
+
+        const d = ( r - Math.sqrt( d2 ) ) / 2;
+
+        s1.collider.center.addScaledVector( normal, d );
+        s2.collider.center.addScaledVector( normal, - d );
+
+      }
+
+    }
+
+  }
+
+}
+
+function updateSpheres( deltaTime ) {
+
+  spheres.forEach( sphere =>{
+
+    sphere.collider.center.addScaledVector( sphere.velocity, deltaTime );
+
+    const result = worldOctree.sphereIntersect( sphere.collider );
+
+    if ( result ) {
+
+      sphere.velocity.addScaledVector( result.normal, - result.normal.dot( sphere.velocity ) * 1.5 );
+      sphere.collider.center.add( result.normal.multiplyScalar( result.depth ) );
+
+    } else {
+
+      sphere.velocity.y -= GRAVITY * deltaTime;
+
+    }
+
+    const damping = Math.exp( - 1.5 * deltaTime ) - 1;
+    sphere.velocity.addScaledVector( sphere.velocity, damping );
+
+    spheresCollisions();
+
+    sphere.mesh.position.copy( sphere.collider.center );
+
+  } );
+
+}
+
+function getForwardVector() {
+
+  camera.getWorldDirection( playerDirection );
+  playerDirection.y = 0;
+  playerDirection.normalize();
+
+  return playerDirection;
+
+}
+
+function getSideVector() {
+
+  camera.getWorldDirection( playerDirection );
+  playerDirection.y = 0;
+  playerDirection.normalize();
+  playerDirection.cross( camera.up );
+
+  return playerDirection;
+
+}
+
+function controls( deltaTime ) {
+
+  const speed = 25;
+
+  if ( playerOnFloor ) {
+
+    if ( keyStates[ 'KeyW' ] ) {
+
+      playerVelocity.add( getForwardVector().multiplyScalar( speed * deltaTime ) );
+
+    }
+
+    if ( keyStates[ 'KeyS' ] ) {
+
+      playerVelocity.add( getForwardVector().multiplyScalar( - speed * deltaTime ) );
+
+    }
+
+    if ( keyStates[ 'KeyA' ] ) {
+
+      playerVelocity.add( getSideVector().multiplyScalar( - speed * deltaTime ) );
+
+    }
+
+    if ( keyStates[ 'KeyD' ] ) {
+
+      playerVelocity.add( getSideVector().multiplyScalar( speed * deltaTime ) );
+
+    }
+
+    if ( keyStates[ 'Space' ] ) {
+
+      playerVelocity.y = 15;
+
+    }
+
+  }
+
+}
+
+const loader = new GLTFLoader();
+
+loader.load( gltfUrl, ( gltf ) => {
+
+  scene.add( gltf.scene );
+
+  worldOctree.fromGraphNode( gltf.scene );
+
+  gltf.scene.traverse( child => {
+
+    if ( child.isMesh ) {
+
+      child.castShadow = true;
+      child.receiveShadow = true;
+
+      if ( child.material.map ) {
+
+        child.material.map.anisotropy = 8;
+
+      }
+
+    }
+
+  } );
+
+  animate();
+
+} );
+
+function animate() {
+
+  const deltaTime = Math.min( 0.05, clock.getDelta() ) / STEPS_PER_FRAME;
+
+  // we look for collisions in substeps to mitigate the risk of
+  // an object traversing another too quickly for detection.
+
+  for ( let i = 0 ; i < STEPS_PER_FRAME ; i ++ ) {
+
+    controls( deltaTime );
+
+    updatePlayer( deltaTime );
+
+    updateSpheres( deltaTime );
+
+  }
+
+  renderer.render( scene, camera );
+
+
+  requestAnimationFrame( animate );
+
+}
