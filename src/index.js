@@ -47,7 +47,7 @@ scene.add( directionalLight );
 
 const canvas = document.getElementById("canvas");
 const renderer = new THREE.WebGLRenderer( {canvas, antialias: true } );
-renderer.setPixelRatio( window.devicePixelRatio );
+// renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( canvas.clientWidth, canvas.clientHeight, false );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.VSMShadowMap;
@@ -106,7 +106,7 @@ document.addEventListener( 'keyup', ( event ) => {
 
 } );
 
-document.addEventListener( 'mousedown', () => {
+canvas.addEventListener( 'mousedown', () => {
 
   document.body.requestPointerLock();
 

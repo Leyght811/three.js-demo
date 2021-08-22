@@ -1,64 +1,127 @@
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>glTF Tutorial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
- <head>
-   <meta charset="utf-8">
-   <title>glTF Tutorial</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <style>
-     html,
-     body {
-       height: 100%;
-       width: 100%;
-       margin: 0;
-       padding: 0;
-     }
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
-     body {
-       display: flex;
-       flex-direction: column;
-       font-family: 'Roboto', Helvetica, sans-serif;
-     }
+      body {
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto", Helvetica, sans-serif;
+      }
 
-     #container {
-       flex: 1 1 auto;
-       min-height: 0;
-     }
+      #canvasContainer {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
 
-     #canvas {
-       width: 100%;
-       height: 100%;
-       touch-action: none;
-     }
+      #canvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
 
-     #controls {
-       background: #262f40;
-       color: #eaecec;
-       height: 40px;
-       flex: 0 0 auto;
-       display: flex;
-       align-items: center;
-     }
+      #controls {
+        background: #262f40;
+        color: #eaecec;
+        height: 40px;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+      }
 
-     #controls>* {
-       flex: 0 0 auto;
-       margin-left: 10px;
-     }
+      #controls > * {
+        flex: 0 0 auto;
+        margin-left: 10px;
+      }
 
-     #title {
-       font-size: x-large;
-       width: 514px;
-       margin-left: calc(50% - 257px);
-     }
-   </style>
- </head>
+      #title {
+        font-size: x-large;
+        width: 514px;
+        margin-left: calc(50% - 257px);
+      }
+    </style>
+  </head>
 
- <body>
-   <div id='container'>
-     <canvas id='canvas'></canvas>
-   </div>
-   <div id='controls'>
-     <div id='title'>Use arrow keys or wasd to move.  Click to shoot.</div>
-   </div>
- </body>
+  <body>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#home"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Home
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#profile"
+          type="button"
+          role="tab"
+          aria-controls="profile"
+          aria-selected="false"
+        >
+          Profile
+        </button>
+      </li>
+    </ul>
 
- </html>
+    <div id="canvasContainer">
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <canvas id="canvas"></canvas>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias nobis
+          aut ipsam expedita commodi sed dolor quibusdam veritatis repudiandae
+          tempore voluptatum magni fuga non quos cum, ratione illo neque qui!
+        </div>
+      </div>
+    </div>
+
+    <div id="controls">
+      <div id="title">Use arrow keys or wasd to move. Click to shoot.</div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
