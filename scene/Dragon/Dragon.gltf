@@ -1,0 +1,228 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.6.16",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Cloth Backdrop",
+            "translation" : [
+                0,
+                -0.26054075360298157,
+                0
+            ]
+        },
+        {
+            "mesh" : 1,
+            "name" : "Dragon",
+            "rotation" : [
+                0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "scale" : [
+                0.0714285746216774,
+                0.0714285746216774,
+                0.0714285746216774
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "Cloth Backdrop",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.4934999942779541
+            }
+        },
+        {
+            "name" : "Dragon with Attenuation",
+            "pbrMetallicRoughness" : {
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cloth Backdrop",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        },
+        {
+            "name" : "Dragon",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "checkerboard",
+            "uri" : "checkerboard.jpg"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 65545,
+            "max" : [
+                0.8909971714019775,
+                0.9414445757865906,
+                0.9030075669288635
+            ],
+            "min" : [
+                -0.9116131067276001,
+                -0.07910096645355225,
+                -0.9860043525695801
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 65545,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 65545,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5125,
+            "count" : 131337,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 76809,
+            "max" : [
+                7.421342849731445,
+                3.1641836166381836,
+                4.195669174194336
+            ],
+            "min" : [
+                -6.672057151794434,
+                -3.138416290283203,
+                -5.744231224060059
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 76809,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 76809,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5125,
+            "count" : 273648,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 786540,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 786540,
+            "byteOffset" : 786540
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 524360,
+            "byteOffset" : 1573080
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 525348,
+            "byteOffset" : 2097440
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 921708,
+            "byteOffset" : 2622788
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 921708,
+            "byteOffset" : 3544496
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 614472,
+            "byteOffset" : 4466204
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1094592,
+            "byteOffset" : 5080676
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 6175268,
+            "uri" : "Dragon.bin"
+        }
+    ]
+}

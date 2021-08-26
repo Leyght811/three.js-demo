@@ -60,7 +60,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Plane.007",
+            "name" : "Dungeon",
             "primitives" : [
                 {
                     "attributes" : {

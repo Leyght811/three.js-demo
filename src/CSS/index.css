@@ -1,0 +1,42 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", Helvetica, sans-serif;
+}
+
+#canvasContainer {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+#canvas {
+  width: 100%;
+  height: calc(100% - 40px);
+  touch-action: none;
+}
+
+#controls {
+  background: #262f40;
+  color: #eaecec;
+  height: 40px;
+  align-items: center;
+}
+
+#controls > * {
+  flex: 0 0 auto;
+  margin-left: 10px;
+}
+
+#title {
+  font-size: x-large;
+  width: 514px;
+  margin-left: calc(50% - 257px);
+}
