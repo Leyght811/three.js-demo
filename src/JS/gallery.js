@@ -84,20 +84,17 @@ function rendererCommon(canvas, gltfUrl) {
     });
 
     model = gltf.scene;
-    // console.log(model)
     renderer.setClearColor(0x262f40);
     renderer.setPixelRatio(window.devicePixelRatio);
-    // renderer.setSize(canvasObj.width, canvasObj.height);
+
+
     //WINDOW RESIZE FUNCTION
 
     window.addEventListener("resize", onWindowResize);
 
     function onWindowResize() {
-      // camera.aspect = (window.innerWidth * 0.4) / (window.innerHeight * 0.4);
 
       camera.updateProjectionMatrix();
-      // renderer.setSize(window.innerWidth * 0.4, window.innerHeight * 0.4);
-      // renderer.setSize(canvasObj.innerWidth, canvasObj.innerHeight);
     }
 
     scene.add(light);
@@ -109,9 +106,6 @@ function rendererCommon(canvas, gltfUrl) {
     requestAnimationFrame(render);
 
     function render() {
-      // console.log(scene.model)
-      // model.rotation.x += 0.1;
-      // model.rotation.y += 0.1;
       renderer.render(scene, camera);
       requestAnimationFrame(render);
     }

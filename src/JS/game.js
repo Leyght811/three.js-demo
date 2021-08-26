@@ -274,7 +274,6 @@ function controls(deltaTime) {
   }
 }
 
-
 const loader = new GLTFLoader();
 
 loader.load(gltfUrl, (gltf) => {
@@ -296,21 +295,23 @@ loader.load(gltfUrl, (gltf) => {
 });
 
 function animate() {
-  onWindowResize()
-  const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
+  onWindowResize();
+  if (document.getElementById("game").className.includes("active")) {
+    const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
 
-  // we look for collisions in substeps to mitigate the risk of
-  // an object traversing another too quickly for detection.
+    // we look for collisions in substeps to mitigate the risk of
+    // an object traversing another too quickly for detection.
 
-  for (let i = 0; i < STEPS_PER_FRAME; i++) {
-    controls(deltaTime);
+    for (let i = 0; i < STEPS_PER_FRAME; i++) {
+      controls(deltaTime);
 
-    updatePlayer(deltaTime);
+      updatePlayer(deltaTime);
 
-    updateSpheres(deltaTime);
+      updateSpheres(deltaTime);
+    }
+
+    renderer.render(scene, camera);
   }
-
-  renderer.render(scene, camera);
 
   requestAnimationFrame(animate);
 }
