@@ -1,0 +1,110 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.6.16",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Queen",
+            "scale" : [
+                20,
+                20,
+                20
+            ],
+            "translation" : [
+                -7.944511889945716e-05,
+                0,
+                -0.00028583849780261517
+            ]
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Queen",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 3655,
+            "max" : [
+                0.01995815895497799,
+                0.03691462054848671,
+                0.02004215680062771
+            ],
+            "min" : [
+                -0.020049385726451874,
+                -0.044274043291807175,
+                -0.019965391606092453
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 3655,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 3655,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 19338,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 43860,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 43860,
+            "byteOffset" : 43860
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 29240,
+            "byteOffset" : 87720
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 38676,
+            "byteOffset" : 116960
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 155636,
+            "uri" : "Queen.bin"
+        }
+    ]
+}
