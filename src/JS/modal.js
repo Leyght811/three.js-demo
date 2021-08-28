@@ -11,11 +11,11 @@ let positionY = 0
 let positionZ = 0
 
 const showHideModal = (model) => {
-  let modalDisplay = document.getElementById("galleryModal");
+  let modalDisplay = document.getElementById("modalBackground");
   if (modalDisplay.style.display == "none") {
-    document.getElementById("galleryModal").style.display = "block";
+    document.getElementById("modalBackground").style.display = "block";
   } else {
-    document.getElementById("galleryModal").style.display = "none";
+    document.getElementById("modalBackground").style.display = "none";
   }
 
   if (model.id !== null) {
@@ -90,5 +90,6 @@ document.getElementById("galleryModalZPosition").oninput = function() {
 closeButton.addEventListener("click", () => {
   showHideModal({ id: null, name: null, url: null });
 });
+
 
 export default showHideModal;

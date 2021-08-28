@@ -77,6 +77,7 @@
         background-color: white;
         top: calc(50vh - 300px);
         left: calc(50% - 400px);
+        z-index: 1;
       }
 
       #modalCloseButton {
@@ -86,6 +87,11 @@
         position: absolute;
         left: calc(100% - 50px);
         top: 20px;
+      }
+
+      #modalCloseButton:hover {
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.57);;
       }
 
       .modalBox {
@@ -105,10 +111,19 @@
         padding-left: 20px;
       }
 
-      #galleryModalName{
+      #galleryModalName {
         margin-bottom: 20px;
         color: #262f40;
         font-size: 32px;
+      }
+
+      #modalBackground {
+        background-color: rgba(0, 0, 0, 0.57);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
       }
     </style>
   </head>
@@ -154,64 +169,66 @@
           aria-labelledby="gallery-tab"
         >
           <div id="myGalleryContainer" class="container"></div>
-          <div style="display: none" id="galleryModal">
-            <i id="modalCloseButton" class="fas fa-times-circle"></i>
-            <div class="container" id="modalContentContainer">
-              <div class="row">
-                <div id="galleryModalCanvasContainer" class="col">
-                  <canvas id="galleryModalCanvas" class="modalBox"> </canvas>
-                </div>
-                <div class="col">
-                  <div id="galleryModalDiv" class="modalBox">
-                    <div id="galleryModalName"></div>
-                    <p>X Rotation:</p>
-                    <input
-                      type="range"
-                      id="galleryModalXRotation"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
-                    <p>Y Rotation:</p>
-                    <input
-                      type="range"
-                      id="galleryModalYRotation"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
-                    <p>Z Rotation:</p>
-                    <input
-                      type="range"
-                      id="galleryModalZRotation"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
-                    <p>X Position:</p>
-                    <input
-                      type="range"
-                      id="galleryModalXPosition"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
-                    <p>Y Position:</p>
-                    <input
-                      type="range"
-                      id="galleryModalYPosition"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
-                    <p>Z Position:</p>
-                    <input
-                      type="range"
-                      id="galleryModalZPosition"
-                      min="-10"
-                      max="10"
-                      value="0"
-                    />
+          <div style="display: none" id="modalBackground">
+            <div id="galleryModal">
+              <i id="modalCloseButton" class="fas fa-times-circle"></i>
+              <div class="container" id="modalContentContainer">
+                <div class="row">
+                  <div id="galleryModalCanvasContainer" class="col">
+                    <canvas id="galleryModalCanvas" class="modalBox"> </canvas>
+                  </div>
+                  <div class="col">
+                    <div id="galleryModalDiv" class="modalBox">
+                      <div id="galleryModalName"></div>
+                      <p>X Rotation:</p>
+                      <input
+                        type="range"
+                        id="galleryModalXRotation"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                      <p>Y Rotation:</p>
+                      <input
+                        type="range"
+                        id="galleryModalYRotation"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                      <p>Z Rotation:</p>
+                      <input
+                        type="range"
+                        id="galleryModalZRotation"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                      <p>X Position:</p>
+                      <input
+                        type="range"
+                        id="galleryModalXPosition"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                      <p>Y Position:</p>
+                      <input
+                        type="range"
+                        id="galleryModalYPosition"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                      <p>Z Position:</p>
+                      <input
+                        type="range"
+                        id="galleryModalZPosition"
+                        min="-10"
+                        max="10"
+                        value="0"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
