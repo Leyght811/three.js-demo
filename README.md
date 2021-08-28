@@ -6,13 +6,13 @@ it consists of a "gallery" and a "game" tab. <br />
 The gallery displays multiple 3d models upon clicking on one of them it will open a modal allowing you to rotate and look at the model. <br />
 The game tab displays a simple interactive environment.  After clicking into the window you will be able to move around with the wasd keys.
 
-# How to run
-After downloading run: <br />
+# How to use
+After downloading enter: <br />
 ```bash
 npm install
 ```
 in the command line. <br />
-then run: <br />
+then this: <br />
 ```bash
 npm run start
 ```
