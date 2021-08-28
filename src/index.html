@@ -9,6 +9,10 @@
       integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
       crossorigin="anonymous"
     />
+    <script
+      src="https://kit.fontawesome.com/5e16ae0aac.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
     <style>
@@ -62,15 +66,55 @@
         margin-bottom: 10px;
       }
 
-      #myGalleryContainer{
+      #myGalleryContainer {
         margin-top: 10px;
+      }
+
+      #galleryModal {
+        position: fixed;
+        height: 600px;
+        width: 800px;
+        background-color: white;
+        top: calc(50vh - 300px);
+        left: calc(50% - 400px);
+      }
+
+      #modalCloseButton {
+        height: 30px;
+        width: 30px;
+        font-size: 30px;
+        position: absolute;
+        left: calc(100% - 50px);
+        top: 20px;
+      }
+
+      .modalBox {
+        position: relative;
+        /* top: 70px; */
+        height: 460px;
+        width: 300px;
+        /* display: inline-block; */
+      }
+
+      #modalContentContainer {
+        position: relative;
+        top: 70px;
+      }
+
+      #galleryModalDiv {
+        padding-left: 20px;
+      }
+
+      #galleryModalName{
+        margin-bottom: 20px;
+        color: #262f40;
+        font-size: 32px;
       }
     </style>
   </head>
 
   <body>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      
       <li class="nav-item" role="presentation">
         <button
           class="nav-link active"
@@ -103,15 +147,75 @@
 
     <div id="canvasContainer">
       <div class="tab-content" id="myTabContent">
-        
         <div
           class="tab-pane show active"
           id="gallery"
           role="tabpanel"
           aria-labelledby="gallery-tab"
         >
-          <div id="myGalleryContainer" class="container">
-
+          <div id="myGalleryContainer" class="container"></div>
+          <div style="display: none" id="galleryModal">
+            <i id="modalCloseButton" class="fas fa-times-circle"></i>
+            <div class="container" id="modalContentContainer">
+              <div class="row">
+                <div id="galleryModalCanvasContainer" class="col">
+                  <canvas id="galleryModalCanvas" class="modalBox"> </canvas>
+                </div>
+                <div class="col">
+                  <div id="galleryModalDiv" class="modalBox">
+                    <div id="galleryModalName"></div>
+                    <p>X Rotation:</p>
+                    <input
+                      type="range"
+                      id="galleryModalXRotation"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                    <p>Y Rotation:</p>
+                    <input
+                      type="range"
+                      id="galleryModalYRotation"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                    <p>Z Rotation:</p>
+                    <input
+                      type="range"
+                      id="galleryModalZRotation"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                    <p>X Position:</p>
+                    <input
+                      type="range"
+                      id="galleryModalXPosition"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                    <p>Y Position:</p>
+                    <input
+                      type="range"
+                      id="galleryModalYPosition"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                    <p>Z Position:</p>
+                    <input
+                      type="range"
+                      id="galleryModalZPosition"
+                      min="-10"
+                      max="10"
+                      value="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -122,13 +226,13 @@
         >
           <canvas id="canvas"></canvas>
           <div id="controls">
-            <div id="title">Use arrow keys or wasd to move. Click to shoot.</div>
+            <div id="title">
+              Use arrow keys or wasd to move. Click to shoot.
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"

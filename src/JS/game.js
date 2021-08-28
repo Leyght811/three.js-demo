@@ -110,7 +110,9 @@ document.addEventListener("keyup", (event) => {
   keyStates[event.code] = false;
 });
 
+let inGame = false
 canvas.addEventListener("mousedown", () => {
+  inGame = true
   document.body.requestPointerLock();
 });
 
@@ -131,14 +133,16 @@ function onWindowResize() {
 }
 
 document.addEventListener("click", () => {
-  const sphere = spheres[sphereIdx];
+  if (document.getElementById("game").className.includes("active") && inGame == true) {
+    const sphere = spheres[sphereIdx];
 
-  camera.getWorldDirection(playerDirection);
+    camera.getWorldDirection(playerDirection);
 
-  sphere.collider.center.copy(playerCollider.end);
-  sphere.velocity.copy(playerDirection).multiplyScalar(30);
+    sphere.collider.center.copy(playerCollider.end);
+    sphere.velocity.copy(playerDirection).multiplyScalar(30);
 
-  sphereIdx = (sphereIdx + 1) % spheres.length;
+    sphereIdx = (sphereIdx + 1) % spheres.length;
+  }
 });
 
 function playerCollitions() {
