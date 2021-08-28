@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+
+import showHideModal from "./modal";
+
 import avocadoURL from "../../scene/Avocado/Avocado.gltf";
 import barramundiFishURL from "../../scene/BarramundiFish/BarramundiFish.gltf";
 import corsetURL from "../../scene/Corset/Corset.gltf";
@@ -53,12 +56,28 @@ for (let i = 0; i < models.length; i++) {
   node.className = "galleryCanvas";
   col.appendChild(node);
   row.appendChild(col);
-  rendererCommon(node.id, models[i].url);
-
+  const loader = new GLTFLoader();
+  loader.load(models[i].url, (gltf) => {
+  
+    gltf.scene.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+  
+        if (child.material.map) {
+          child.material.map.anisotropy = 8;
+        }
+      }
+    });
+    rendererCommon(node.id, gltf.scene);
+  });
+  col.addEventListener("click", () => {
+    showHideModal(models[i]);
+  });
   colCount += 1;
 }
 
-function rendererCommon(canvas, gltfUrl) {
+function rendererCommon(canvas, model) {
   var canvasObj = document.getElementById(canvas);
   var renderer = new THREE.WebGLRenderer({
       canvas: canvasObj,
@@ -66,48 +85,31 @@ function rendererCommon(canvas, gltfUrl) {
     }),
     camera = new THREE.PerspectiveCamera(35, 1, 0.1, 3000),
     scene = new THREE.Scene(),
-    light = new THREE.AmbientLight(0xffffff, 0.5), // will light the dark sides of the object;
-    light1 = new THREE.PointLight(0xffffff, 0.5); //will light the front of the object
-  var model;
-  const loader = new GLTFLoader();
+    light = new THREE.AmbientLight(0xffffff, 1), // will light the dark sides of the object;
+    light1 = new THREE.PointLight(0xffffff, 1); //will light the front of the object
+  renderer.setClearColor(0x262f40);
+  renderer.setPixelRatio(window.devicePixelRatio);
 
-  loader.load(gltfUrl, (gltf) => {
-    gltf.scene.traverse((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
+  //WINDOW RESIZE FUNCTION
 
-        if (child.material.map) {
-          child.material.map.anisotropy = 8;
-        }
-      }
-    });
+  window.addEventListener("resize", onWindowResize);
 
-    model = gltf.scene;
-    renderer.setClearColor(0x262f40);
-    renderer.setPixelRatio(window.devicePixelRatio);
+  function onWindowResize() {
+    camera.updateProjectionMatrix();
+  }
 
+  scene.add(light);
+  scene.add(light1);
+  scene.add(model);
+  camera.position.z = 5;
 
-    //WINDOW RESIZE FUNCTION
+  //ANIMATION
+  requestAnimationFrame(render);
 
-    window.addEventListener("resize", onWindowResize);
-
-    function onWindowResize() {
-
-      camera.updateProjectionMatrix();
-    }
-
-    scene.add(light);
-    scene.add(light1);
-    scene.add(model);
-    camera.position.z = 5;
-
-    //ANIMATION
+  function render() {
+    renderer.render(scene, camera);
     requestAnimationFrame(render);
-
-    function render() {
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
-    }
-  });
+  }
 }
+
+export default rendererCommon;

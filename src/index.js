@@ -1,5 +1,9 @@
+require("../src/JS/modal.js")
 require("../src/JS/gallery.js")
 require("../src/JS/game.js")
+
+
+
 
 // const express = require('express')
 // const app = express()
